@@ -1,0 +1,10 @@
+spring:
+  ai:
+    anthropic:
+      api-key: test-key
+  mvc:
+    apiversion:
+      enabled: true
+      default: v1
+      use:
+        path-segment: 1
