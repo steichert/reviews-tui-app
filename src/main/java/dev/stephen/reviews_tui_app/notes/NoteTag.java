@@ -1,4 +1,4 @@
-package dev.stephen.reviews_tui_app.notes.model;
+package dev.stephen.reviews_tui_app.notes;
 
 public enum NoteTag {
     HIGHLIGHT,

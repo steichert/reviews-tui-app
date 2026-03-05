@@ -1,7 +1,6 @@
 package dev.stephen.reviews_tui_app.notes;
 
-import dev.stephen.reviews_tui_app.colleagues.dto.ColleagueDto;
-import dev.stephen.reviews_tui_app.notes.dto.ReviewNoteDto;
+import dev.stephen.reviews_tui_app.colleagues.ColleagueDto;
 
 import java.time.LocalDate;
 import java.util.List;

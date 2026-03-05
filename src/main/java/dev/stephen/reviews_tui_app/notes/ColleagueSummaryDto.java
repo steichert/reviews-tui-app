@@ -1,7 +1,5 @@
 package dev.stephen.reviews_tui_app.notes;
 
-import dev.stephen.reviews_tui_app.notes.dto.ReviewNoteDto;
-import dev.stephen.reviews_tui_app.notes.model.NoteCategory;
 
 import java.util.List;
 import java.util.Map;

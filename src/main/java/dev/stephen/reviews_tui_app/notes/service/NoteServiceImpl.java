@@ -1,12 +1,13 @@
 package dev.stephen.reviews_tui_app.notes.service;
 
-import dev.stephen.reviews_tui_app.colleagues.dto.ColleagueDto;
+import dev.stephen.reviews_tui_app.colleagues.ColleagueDto;
+import dev.stephen.reviews_tui_app.colleagues.ColleagueService;
 import dev.stephen.reviews_tui_app.notes.ColleagueSummaryDto;
 import dev.stephen.reviews_tui_app.notes.NoteService;
-import dev.stephen.reviews_tui_app.notes.dto.ReviewNoteDto;
 import dev.stephen.reviews_tui_app.notes.entity.ReviewNote;
-import dev.stephen.reviews_tui_app.notes.model.NoteCategory;
-import dev.stephen.reviews_tui_app.notes.model.NoteTag;
+import dev.stephen.reviews_tui_app.notes.NoteCategory;
+import dev.stephen.reviews_tui_app.notes.NoteTag;
+import dev.stephen.reviews_tui_app.notes.ReviewNoteDto;
 import dev.stephen.reviews_tui_app.notes.repository.NoteRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,18 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class NoteServiceImpl implements NoteService {
 
     private final NoteRepository noteRepository;
+    private final ColleagueService colleagueService;
 
-    public NoteServiceImpl(NoteRepository noteRepository) {
+    public NoteServiceImpl(NoteRepository noteRepository, ColleagueService colleagueService) {
         this.noteRepository = noteRepository;
+        this.colleagueService = colleagueService;
     }
 
     @Override
@@ -42,18 +46,25 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public ColleagueSummaryDto getSummaryForColleague(String colleagueName) {
-        List<ReviewNote> notes = noteRepository.findByColleague_Name(colleagueName);
+        Optional<ColleagueDto> colleague = colleagueService.findByName(colleagueName);
+        if (colleague.isEmpty()) {
+            return new ColleagueSummaryDto(colleagueName, 0, 0, 0, Map.of());
+        }
+        List<ReviewNote> notes = noteRepository.findByColleagueId(colleague.get().id());
         return buildSummary(colleagueName, notes);
     }
 
     @Override
     public List<ColleagueSummaryDto> getSummaryForAll(LocalDate from, LocalDate to) {
         List<ReviewNote> notes = noteRepository.findByCreatedAtBetween(from.atStartOfDay(), to.atTime(LocalTime.MAX));
-        Map<String, List<ReviewNote>> byColleague = notes.stream()
-                .filter(n -> n.getColleague() != null)
-                .collect(Collectors.groupingBy(n -> n.getColleague().getName()));
-        return byColleague.entrySet().stream()
-                .map(e -> buildSummary(e.getKey(), e.getValue()))
+        Map<Long, List<ReviewNote>> byId = notes.stream()
+                .collect(Collectors.groupingBy(ReviewNote::getColleagueId));
+        return byId.entrySet().stream()
+                .map(e -> {
+                    String name = colleagueService.findById(e.getKey())
+                            .map(ColleagueDto::name).orElse("Unknown");
+                    return buildSummary(name, e.getValue());
+                })
                 .toList();
     }
 
@@ -68,14 +79,6 @@ public class NoteServiceImpl implements NoteService {
     }
 
     private ReviewNoteDto mapNoteToDto(ReviewNote note) {
-        ColleagueDto colleagueDto = null;
-        if (note.getColleague() != null) {
-            colleagueDto = new ColleagueDto(
-                    note.getColleague().getId(),
-                    note.getColleague().getName(),
-                    note.getColleague().getCreatedAt(),
-                    note.getColleague().getUpdatedAt());
-        }
-        return new ReviewNoteDto(note.getContent(), note.getCategory(), note.getTag(), colleagueDto, note.getCreatedAt(), note.getUpdatedAt());
+        return new ReviewNoteDto(note.getContent(), note.getCategory(), note.getTag(), null, note.getCreatedAt(), note.getUpdatedAt());
     }
 }

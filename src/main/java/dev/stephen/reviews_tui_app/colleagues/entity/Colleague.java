@@ -1,12 +1,10 @@
 package dev.stephen.reviews_tui_app.colleagues.entity;
 
-import dev.stephen.reviews_tui_app.notes.entity.ReviewNote;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -16,7 +14,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -34,9 +31,6 @@ public class Colleague {
     @NotBlank
     @Column(nullable = false, columnDefinition = "VARCHAR(100)")
     private String name;
-
-    @OneToMany(mappedBy = "colleague")
-    private List<ReviewNote> reviewNotes;
 
     @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;

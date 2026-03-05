@@ -3,7 +3,10 @@
     "allow": [
       "Bash(./mvnw clean:*)",
       "Bash(./mvnw test:*)",
-      "Bash(xargs ls:*)"
+      "Bash(xargs ls:*)",
+      "Bash(./mvnw dependency:tree:*)",
+      "Bash(jar tf:*)",
+      "Bash(git:*)"
     ]
   }
 }

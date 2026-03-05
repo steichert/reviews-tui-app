@@ -1,8 +1,7 @@
 package dev.stephen.reviews_tui_app.notes.entity;
 
-import dev.stephen.reviews_tui_app.colleagues.entity.Colleague;
-import dev.stephen.reviews_tui_app.notes.model.NoteCategory;
-import dev.stephen.reviews_tui_app.notes.model.NoteTag;
+import dev.stephen.reviews_tui_app.notes.NoteCategory;
+import dev.stephen.reviews_tui_app.notes.NoteTag;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -43,10 +42,6 @@ public class ReviewNote {
 
     @Column(name = "colleague_id", nullable = false)
     private Long colleagueId;
-
-    @ManyToOne
-    @JoinColumn(name = "colleague_id", insertable = false, updatable = false)
-    private Colleague colleague;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

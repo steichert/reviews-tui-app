@@ -1,12 +1,12 @@
 package dev.stephen.reviews_tui_app.gateway.rest;
 
 import dev.stephen.reviews_tui_app.colleagues.ColleagueService;
-import dev.stephen.reviews_tui_app.colleagues.dto.ColleagueDto;
+import dev.stephen.reviews_tui_app.colleagues.ColleagueDto;
 import dev.stephen.reviews_tui_app.gateway.rest.dto.CreateColleagueRequest;
 import dev.stephen.reviews_tui_app.gateway.rest.dto.CreateNoteRequest;
 import dev.stephen.reviews_tui_app.notes.ColleagueSummaryDto;
 import dev.stephen.reviews_tui_app.notes.NoteService;
-import dev.stephen.reviews_tui_app.notes.dto.ReviewNoteDto;
+import dev.stephen.reviews_tui_app.notes.ReviewNoteDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

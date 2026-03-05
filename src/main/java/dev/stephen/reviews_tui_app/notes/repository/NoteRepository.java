@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface NoteRepository extends JpaRepository<ReviewNote, Long> {
-    List<ReviewNote> findByColleague_Name(String name);
+    List<ReviewNote> findByColleagueId(Long colleagueId);
     List<ReviewNote> findByCreatedAtBetween(LocalDateTime from, LocalDateTime to);
 }

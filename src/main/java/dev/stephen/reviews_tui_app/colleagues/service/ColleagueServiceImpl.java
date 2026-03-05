@@ -1,7 +1,7 @@
 package dev.stephen.reviews_tui_app.colleagues.service;
 
+import dev.stephen.reviews_tui_app.colleagues.ColleagueDto;
 import dev.stephen.reviews_tui_app.colleagues.ColleagueService;
-import dev.stephen.reviews_tui_app.colleagues.dto.ColleagueDto;
 import dev.stephen.reviews_tui_app.colleagues.entity.Colleague;
 import dev.stephen.reviews_tui_app.colleagues.repository.ColleagueRepository;
 import org.apache.commons.text.similarity.JaroWinklerSimilarity;
@@ -41,6 +41,11 @@ public class ColleagueServiceImpl implements ColleagueService {
     @Override
     public Optional<ColleagueDto> findById(Long id) {
         return colleagueRepository.findById(id).map(this::toDto);
+    }
+
+    @Override
+    public Optional<ColleagueDto> findByName(String name) {
+        return colleagueRepository.findByName(name).map(this::toDto);
     }
 
     @Override
