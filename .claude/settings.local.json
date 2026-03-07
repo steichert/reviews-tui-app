@@ -6,7 +6,11 @@
       "Bash(xargs ls:*)",
       "Bash(./mvnw dependency:tree:*)",
       "Bash(jar tf:*)",
-      "Bash(git:*)"
+      "Bash(git:*)",
+      "Bash(jar:*)",
+      "Read(//private/tmp/**)",
+      "Bash(javap -p org/springframework/shell/core/autoconfigure/SpringShellAutoConfiguration.class)",
+      "Bash(javap:*)"
     ]
   }
 }

@@ -1,8 +1,6 @@
 spring:
-  application:
-    name: reviews-tui-app
   datasource:
-    url: jdbc:h2:file:${user.home}/Development/.reviews-tui-app/data/notesdb;AUTO_SERVER=TRUE
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     driver-class-name: org.h2.Driver
     username: sa
     password:
