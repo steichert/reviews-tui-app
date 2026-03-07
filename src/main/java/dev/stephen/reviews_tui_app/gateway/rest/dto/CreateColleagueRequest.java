@@ -1,4 +1,3 @@
 package dev.stephen.reviews_tui_app.gateway.rest.dto;
 
-public record CreateColleagueRequest(String name) {
-}
+public record CreateColleagueRequest(String name) {}
