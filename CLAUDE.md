@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-# Run the application (interactive shell)
+# Run the application (interactive TUI)
 ./mvnw spring-boot:run
 
 # Build (skip tests)
@@ -17,13 +17,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Run a single test class
 ./mvnw test -Dtest=ReviewControllerIntegrationTest
 
+# Format code (Spotless / Google Java Format — run before committing)
+./mvnw spotless:apply
+
+# Check formatting without modifying (runs automatically during verify phase)
+./mvnw spotless:check
+
 # Native build (requires GraalVM 25+)
 ./mvnw native:compile -Pnative
 ```
 
 ## Architecture
 
-This is a **Spring Boot 4 CLI application** using Spring Shell for an interactive terminal. It tracks performance notes about colleagues. The database is a file-based H2 instance stored at `~/.reviews-tui-app/data/notesdb`.
+This is a **Spring Boot 4 TUI application** using TamboUI for an interactive terminal UI. It tracks performance notes about colleagues. The database is a file-based H2 instance stored at `~/Development/.reviews-tui-app/data/notesdb` (configured in `application-local.yaml`).
+
+`Application.java` extends TamboUI's `ToolkitApp` and overrides `render()` to define the terminal UI. It is not a standard `SpringApplication.run()` entry point.
 
 ### Module Structure (Spring Modulith)
 
@@ -31,7 +39,7 @@ The app is organized into four modules enforced by Spring Modulith. Cross-module
 
 - **`colleagues/`** — Colleague entity management. Public API: `ColleagueService` interface (at module root). Sub-packages: `entity/`, `service/`, `repository/`, `dto/`.
 - **`notes/`** — Performance note management. Public API: `NoteService` interface (at module root). Notes have a `NoteCategory` (`TECHNICAL_ABILITY`, `RESPONSIBILITY_TO_OTHERS`, `CUSTOMER_SUCCESS`, `GENERAL`) and `NoteTag` (`HIGHLIGHT`, `IMPROVEMENT`, `NONE`). Sub-packages: `entity/`, `service/`, `repository/`.
-- **`gateway/`** — External adapters only: `cli/ReviewCommands.java` (Spring Shell commands) and `rest/ReviewController.java` (REST API). These depend on the service interfaces, never directly on repositories.
+- **`gateway/`** — External adapters only: `cli/ReviewCommands.java` (currently an empty stub) and `rest/ReviewController.java` (REST API). These depend on the service interfaces, never directly on repositories.
 - **`shared/`** — Cross-cutting Spring configuration (`AppConfiguration.java`).
 
 DTOs and enums that form the public module API live at the module root package (e.g., `colleagues/ColleagueDto.java`, not `colleagues/dto/ColleagueDto.java`).
@@ -39,7 +47,7 @@ DTOs and enums that form the public module API live at the module root package (
 ### Data Flow
 
 ```
-CLI (ReviewCommands) ──→ ColleagueService / NoteService ──→ JPA Repositories ──→ H2
+TUI (Application/ToolkitApp) ──→ ColleagueService / NoteService ──→ JPA Repositories ──→ H2
 REST (ReviewController) ──→ same services
 ```
 
@@ -61,9 +69,9 @@ SpringDoc OpenAPI UI is available at `/swagger-ui.html` when running.
 - DTOs are Java records (e.g., `ColleagueDto`, `ReviewNoteDto`).
 - Entities use Lombok (`@Data`, `@Builder`, etc.) and JPA auditing (`createdAt`, `updatedAt`).
 - Spring Modulith auto-generates PlantUML architecture diagrams to `target/spring-modulith-docs/` during test runs.
-- Spring AI (Anthropic) is a dependency — the app may integrate LLM summarization for the `summary` command.
-- H2 console is accessible at `http://localhost:8080/h2-console` for debugging (requires `spring.main.web-application-type` to not be `none`).
 - TamboUI (`dev.tamboui`) is a terminal UI DSL dependency used for rendering TUI components.
+- H2 console is accessible at `http://localhost:8080/h2-console` when running with the web layer enabled.
+- `application.yaml` is empty; runtime config lives in `application-local.yaml`.
 
 ### Planned CLI Commands (per README)
 

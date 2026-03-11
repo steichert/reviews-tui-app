@@ -25,17 +25,25 @@ import lombok.Setter;
 @Table(name = "colleagues")
 public class Colleague {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  @NotBlank
-  @Column(nullable = false, columnDefinition = "VARCHAR(100)")
-  private String name;
+    @NotBlank
+    @Column(nullable = false, columnDefinition = "VARCHAR(100)")
+    private String name;
 
-  @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
-  private LocalDateTime createdAt;
+    @Column(
+            name = "created_at",
+            nullable = false,
+            updatable = false,
+            columnDefinition = "TIMESTAMP")
+    private LocalDateTime createdAt;
 
-  @Column(name = "updated_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
-  private LocalDateTime updatedAt;
+    @Column(
+            name = "updated_at",
+            nullable = false,
+            updatable = false,
+            columnDefinition = "TIMESTAMP")
+    private LocalDateTime updatedAt;
 }

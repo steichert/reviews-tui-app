@@ -10,7 +10,7 @@ import dev.stephen.reviews_tui_app.notes.entity.ReviewNote;
 
 @Repository
 public interface NoteRepository extends JpaRepository<ReviewNote, Long> {
-  List<ReviewNote> findByColleagueId(Long colleagueId);
+    List<ReviewNote> findByColleagueId(Long colleagueId);
 
-  List<ReviewNote> findByCreatedAtBetween(LocalDateTime from, LocalDateTime to);
+    List<ReviewNote> findByCreatedAtBetween(LocalDateTime from, LocalDateTime to);
 }

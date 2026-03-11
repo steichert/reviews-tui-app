@@ -23,30 +23,30 @@ import lombok.Setter;
 @Table(name = "review_notes")
 public class ReviewNote {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  @NotBlank
-  @Column(nullable = false, columnDefinition = "TEXT")
-  private String content;
+    @NotBlank
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String content;
 
-  @NotNull
-  @Enumerated(EnumType.STRING)
-  @Column(nullable = false, columnDefinition = "VARCHAR(50)")
-  private NoteCategory category;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "VARCHAR(50)")
+    private NoteCategory category;
 
-  @NotNull
-  @Enumerated(EnumType.STRING)
-  @Column(nullable = false, columnDefinition = "VARCHAR(50)")
-  private NoteTag tag;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "VARCHAR(50)")
+    private NoteTag tag;
 
-  @Column(name = "colleague_id", nullable = false)
-  private Long colleagueId;
+    @Column(name = "colleague_id", nullable = false)
+    private Long colleagueId;
 
-  @Column(name = "created_at", nullable = false, updatable = false)
-  private LocalDateTime createdAt;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
-  @Column(name = "updated_at", nullable = false, updatable = false)
-  private LocalDateTime updatedAt;
+    @Column(name = "updated_at", nullable = false, updatable = false)
+    private LocalDateTime updatedAt;
 }

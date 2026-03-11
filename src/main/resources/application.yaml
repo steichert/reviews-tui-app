@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: reviews-tui-app
+  datasource:
+    url: jdbc:h2:file:${user.home}/Development/.reviews-tui-app/data/notesdb;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+review:
+  period:
+    cycle: 0 0 1 1,7 * # Every 6 months on the first day of the month at 00:00

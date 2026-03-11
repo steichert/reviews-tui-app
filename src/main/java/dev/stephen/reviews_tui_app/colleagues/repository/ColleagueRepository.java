@@ -10,7 +10,7 @@ import dev.stephen.reviews_tui_app.colleagues.entity.Colleague;
 
 @Repository
 public interface ColleagueRepository extends JpaRepository<Colleague, Long> {
-  Optional<Colleague> findByName(String name);
+    Optional<Colleague> findByName(String name);
 
-  List<Colleague> findByNameContainingIgnoreCase(String name);
+    List<Colleague> findByNameContainingIgnoreCase(String name);
 }
