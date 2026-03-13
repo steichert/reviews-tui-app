@@ -15,7 +15,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ./mvnw test
 
 # Run a single test class
-./mvnw test -Dtest=ReviewControllerIntegrationTest
+./mvnw test -Dtest=ModularityTest
 
 # Format code (Spotless / Google Java Format — run before committing)
 ./mvnw spotless:apply
@@ -39,19 +39,21 @@ The app is organized into four modules enforced by Spring Modulith. Cross-module
 
 - **`colleagues/`** — Colleague entity management. Public API: `ColleagueService` interface (at module root). Sub-packages: `entity/`, `service/`, `repository/`, `dto/`.
 - **`notes/`** — Performance note management. Public API: `NoteService` interface (at module root). Notes have a `NoteCategory` (`TECHNICAL_ABILITY`, `RESPONSIBILITY_TO_OTHERS`, `CUSTOMER_SUCCESS`, `GENERAL`) and `NoteTag` (`HIGHLIGHT`, `IMPROVEMENT`, `NONE`). Sub-packages: `entity/`, `service/`, `repository/`.
-- **`gateway/`** — External adapters only: `cli/ReviewCommands.java` (currently an empty stub) and `rest/ReviewController.java` (REST API). These depend on the service interfaces, never directly on repositories.
-- **`shared/`** — Cross-cutting Spring configuration (`AppConfiguration.java`).
+- **`gateway/`** — Planned but not yet implemented. Will contain `cli/ReviewCommands.java` and `rest/ReviewController.java`. Must depend only on service interfaces, never on repositories.
+- **`shared/`** — Planned but not yet implemented. Will contain cross-cutting Spring configuration.
 
-DTOs and enums that form the public module API live at the module root package (e.g., `colleagues/ColleagueDto.java`, not `colleagues/dto/ColleagueDto.java`).
+DTOs and enums that form the public module API live at the module root package (e.g., `colleagues/ColleagueDto.java`, not `colleagues/dto/ColleagueDto.java`). Note: a stale duplicate `colleagues/dto/ColleagueDto.java` exists and should be removed.
 
 ### Data Flow
 
 ```
 TUI (Application/ToolkitApp) ──→ ColleagueService / NoteService ──→ JPA Repositories ──→ H2
-REST (ReviewController) ──→ same services
+REST (ReviewController, planned) ──→ same services
 ```
 
-### REST API
+On `onStart()`, `Application` auto-creates a "Steve" colleague if the database is empty.
+
+### REST API (Planned — `gateway/` module not yet implemented)
 
 Base path: `/api/v1`
 
