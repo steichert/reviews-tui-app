@@ -11,7 +11,21 @@
       "Read(//private/tmp/**)",
       "Bash(javap -p org/springframework/shell/core/autoconfigure/SpringShellAutoConfiguration.class)",
       "Bash(javap:*)",
-      "Bash(./mvnw spotless:apply:*)"
+      "Bash(./mvnw spotless:apply:*)",
+      "Bash(find /tmp/dev/tamboui -name \"*.java\" -type f 2>/dev/null | grep -E \"\\(ToolkitApp|Toolkit|Router|Navigation|Stack|Screen\\)\" | head -20)",
+      "Bash(find /tmp -name \"*Form*.java\" -type f 2>/dev/null | head -10)",
+      "Bash(find /tmp -name \"*Dialog*.java\" -type f 2>/dev/null | head -5)",
+      "Bash(grep -r \"screen\\\\|Screen\\\\|route\\\\|Route\" /tmp/dev/tamboui --include=\"*.java\" 2>/dev/null | head -20)",
+      "Bash(find /tmp -name \"FormState.java\" -type f 2>/dev/null | head -1 | xargs cat 2>/dev/null | head -100)",
+      "Bash(find /tmp/dev -name \"*.java\" -type f 2>/dev/null | wc -l)",
+      "Bash(find /tmp/dev/tamboui -name \"FormState*\" 2>/dev/null | head -5)",
+      "Bash(mkdir -p /tmp/tamboui-widgets)",
+      "Read(//tmp/**)",
+      "Bash(cd /tmp && unzip -q ~/.m2/repository/dev/tamboui/tamboui-toolkit/0.2.0-SNAPSHOT/tamboui-toolkit-0.2.0-SNAPSHOT-sources.jar && find . -name \"*.java\" | grep -E \"\\(ToolkitApp|EventRouter\\)\" | head -20)",
+      "Bash(mkdir -p /tmp/tamboui-src && cd /tmp/tamboui-src && unzip -qo ~/.m2/repository/dev/tamboui/tamboui-toolkit/0.2.0-SNAPSHOT/tamboui-toolkit-0.2.0-SNAPSHOT-sources.jar 2>&1 | head -5)",
+      "Bash(cd /tmp && jar tf /Users/stephenteichert/.m2/repository/dev/tamboui/tamboui-toolkit/0.2.0-SNAPSHOT/tamboui-toolkit-0.2.0-SNAPSHOT-sources.jar | grep -E \"\\\\.java$\" | sort)",
+      "Bash(find ~/.m2/repository/dev/tamboui -type f -name \"*.jar\" 2>/dev/null | head -20)",
+      "Bash(cd /tmp && unzip -q /Users/stephenteichert/.m2/repository/dev/tamboui/tamboui-toolkit/0.2.0-SNAPSHOT/tamboui-toolkit-0.2.0-SNAPSHOT-sources.jar && find . -type f -name \"*.java\" | grep -i \"form\\\\|field\\\\|focus\\\\|toolkit\" | head -20)"
     ]
   }
 }
